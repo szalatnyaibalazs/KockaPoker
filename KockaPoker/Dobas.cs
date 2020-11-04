@@ -74,10 +74,6 @@ namespace KockaPoker
             {
                 return "Kis sor";
             }
-            else if (true)
-            {
-
-            }
             else
             {
                 return "Szemét";
