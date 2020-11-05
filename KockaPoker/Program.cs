@@ -10,7 +10,7 @@ namespace KockaPoker
     {
         static void Main(string[] args)
         {
-            Dobas d = new Dobas(1,5,1,5,3);
+            Dobas d = new Dobas(5,4,1,2,2);
             //d.EgyDobas();
             d.KiIras();
             Console.WriteLine(d.Erteke());

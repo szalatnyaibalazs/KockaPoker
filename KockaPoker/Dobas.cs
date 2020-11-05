@@ -46,38 +46,42 @@ namespace KockaPoker
             {
                 eredmeny[k]++;
             }
-            if (eredmeny.ContainsValue(2) && eredmeny.ContainsValue(3))
-            {
-                return "Full";
-            }
-            else if (eredmeny.ContainsValue(3))
-            {
-                return "Drill";
-            }
-            else if (eredmeny.ContainsValue(2)&&!eredmeny.ContainsValue(3))
-            {
-                return "Pár";
-            }
-            else if (eredmeny.ContainsValue(4))
-            {
-                return "Póker";
-            }
-            else if (eredmeny.ContainsValue(5))
-            {
-                return "Nagypóker";
-            }
-            else if (eredmeny.ContainsValue(1)
-                && !eredmeny.ContainsValue(4) 
-                && !eredmeny.ContainsValue(3) 
-                && !eredmeny.ContainsValue(2) 
-                && !eredmeny.ContainsValue(5))
-            {
-                return "Kis sor";
-            }
-            else
-            {
-                return "Szemét";
-            }
+            //A dictionaryból lekérdezzük az 1 value-nál nagyobb elemeket
+            //Első eset ha egy elem marad(value értéket nézzük):
+            //  -5 akkor nagypóker
+            //  -4 póker
+            //  -3 drill
+            //  -2 pár
+            //  A key érték mondja meg hogy hányas -> 4-es póker
+            //Második eset két elem marad:
+            /*Value 3 és 2 full
+             * value 2és 2 két pár
+             * Harmadik eset nem marad egy sem:
+             *  -Ha a Key:6 egyenlő nulla -> kis sor
+             *  -Ha a key:1 =0 ->nagy sor
+             *Minden más esetben szemét(moslék)*/
+            var result = (from e in eredmeny
+                         orderby e.Value,e.Key descending
+                         where e.Value > 1
+                         select new { szam = e.Key, Db = e.Value }).ToList();
+
+            Console.WriteLine();
+
+            int darab = result.Count;
+            string[] egyes = new string[] { "", "", "Pár", "Drill", "Póker", "Nagypóker" };
+            return $"{result[0].szam} {egyes[result[0].Db]}";
+           
+            //Ez is jó
+            //switch (result[0].Db)
+            //{
+            //    case 5: return $"{result[0].szam} Nagypóker";
+
+            //    case 4: return $"{result[0].szam} Póker";
+
+            //    case 3: return $"{result[0].szam} Drill";
+
+            //    case 2: return $"{result[0].szam} Pár";
+            //}
         }
     }
 }
